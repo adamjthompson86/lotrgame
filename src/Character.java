@@ -42,7 +42,7 @@ public class Character {
    }
 
    private int startDanceSkill() {
-         int startDanceSkill;
+      int startDanceSkill;
       if (race.equalsIgnoreCase("Elf")) {
          startDanceSkill = 80;
       } else if (race.equalsIgnoreCase("Dwarf")) {
@@ -57,7 +57,8 @@ public class Character {
          startDanceSkill = 0;
       }
       return startDanceSkill;
-}
+   }
+
    public void addCoin(int add) {
       coins = coins + add;
    }
