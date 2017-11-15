@@ -1,4 +1,5 @@
 
+import java.util.*;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -17,7 +18,7 @@ public class DrinkingGame {
       opponentCurrentDrinks = 0;
       characterCurrentDrinks = 0;
       // Choose opponent
-      opponent = "Gimli";
+      opponent = drinkingOpponent();
       //set winning number of drinks    
       Random rand = new Random();
       int maxDrinks = rand.nextInt(10) + 10;
@@ -32,42 +33,23 @@ public class DrinkingGame {
 
    public boolean drink() {
       boolean drinkingGameOn = true;
-      System.out.println("No pauses, no spills. And no regurgitation! Aye, Last one standing wins!");
+      System.out.println("No pauses, no spills. And no regurgitation! Aye, last one standing wins!");
       do {
+         Game.pauseGame(1);
          System.out.println("Glug...");
-         try {
-            TimeUnit.SECONDS.sleep(1);
-         } catch (InterruptedException ex) {
-            Logger.getLogger(DrinkingGame.class.getName()).log(Level.SEVERE, null, ex);
-         }
-         System.out.println("Glug...");
-         try {
-            TimeUnit.SECONDS.sleep(1);
-         } catch (InterruptedException ex) {
-            Logger.getLogger(DrinkingGame.class.getName()).log(Level.SEVERE, null, ex);
-         }
+         Game.pauseGame(1);
          System.out.println(opponent + " has had " + ++opponentCurrentDrinks + " drinks");
          System.out.println("You've had " + ++characterCurrentDrinks + " of " + characterMaxDrinks + " drinks");
 
          if (characterCurrentDrinks == 8) {
-            System.out.println("Hear, hear. It's the dwarves that go swimming with little hairy women!");
+            System.out.println("\u266B " + drinkingQuote());
          }
-         if (characterCurrentDrinks == 10) {
-            System.out.println("I feel something. A slight tingling in my fingers.");
-         }
+
          if ((characterCurrentDrinks >= characterMaxDrinks) || (opponentCurrentDrinks >= opponentMaxDrinks)) {
             System.out.println("What did I say? He can't hold his liquor!");
-            try {
-               TimeUnit.SECONDS.sleep(2);
-            } catch (InterruptedException ex) {
-               Logger.getLogger(DrinkingGame.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            Game.pauseGame(2);
             System.out.println("...CRASH...");
-            try {
-               TimeUnit.SECONDS.sleep(2);
-            } catch (InterruptedException ex) {
-               Logger.getLogger(DrinkingGame.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            Game.pauseGame(2);
             System.out.println("Game over.");
             if ((characterMaxDrinks - characterCurrentDrinks) >= (opponentMaxDrinks - opponentCurrentDrinks)) {
                System.out.println("You win 5 coins.");
@@ -82,4 +64,36 @@ public class DrinkingGame {
       return false;
    }
 
+   public String drinkingQuote() {
+      ArrayList<String> quotes = new ArrayList<String>();
+      quotes.add("I feel something. A slight tingling in my fingers.");
+      quotes.add("It's the Dwarves that go swimming with little, hairy women!");
+      quotes.add("Give me your name, horse-master, and I shall give you mine!");
+      quotes.add("It's true you don't see many Dwarf-women. And in fact, they are so alike in voice and appearance, that they are often mistaken for Dwarf-men.");
+      quotes.add("You'll find more cheer in a graveyard.");
+      quotes.add("Whatever luck you live by... let's hope it lasts the night.");
+      quotes.add("That was deliberate, it was deliberate.");
+      quotes.add("Keep breathing. That's the key. Breathe.");
+      quotes.add("That still only counts as one.");
+      quotes.add("Certainty of death. Small chance of success. What are we waiting for?");
+      quotes.add("There's plenty for the both of us, may the best Dwarf win.");
+      quotes.add("Soon, you will enjoy the fabled hospitality of the Dwarves.");
+      quotes.add("I have the eyes of a hawk and the ears of a fox.");
+      quotes.add("Not the beard!");
+      Random randomizer = new Random();
+      String randomQuote = quotes.get(randomizer.nextInt(quotes.size()));
+      return randomQuote;
+   }
+   
+      public String drinkingOpponent() {
+      ArrayList<String> opponent = new ArrayList<String>();
+      opponent.add("Gimli");
+      opponent.add("Legolas");
+      opponent.add("Eomer");
+      opponent.add("Pippin");
+      opponent.add("Merry");
+      Random randomizer = new Random();
+      String randomOpponent = opponent.get(randomizer.nextInt(opponent.size()));
+      return randomOpponent;
+   }
 }
